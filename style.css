@@ -1,0 +1,11 @@
+table, tr, td, th {
+    border: solid black;
+    border-collapse: collapse;
+    color: green;
+    font-size: 40px;
+    text-align: center;
+}
+
+table {
+    margin: auto;
+}
