@@ -69,8 +69,8 @@
     }
     if (isset($_GET['Clear'])) {
         // unset($$_GET);
-        ob_end_clean();
         header("Location:" . $_SERVER['PHP_SELF']);
+        ob_end_clean();
         exit;
     }
     ?>
