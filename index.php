@@ -30,32 +30,22 @@
     }
     function output($value1, $key1)
     {
-        foreach ($value1 as $key2 => $value2) {
-            echo "<tr>";
-            if (!is_array($value2)) {
-                echo "<td rowspan='4'>$value2</td>\n";
+        echo "<tr>";
+        foreach ($value1 as $key1 => $value2) {
+            echo "<td>$value2</td>";
+            if (isset($_GET['Radio2'])) {
+                usort($value1, "cmp_year");
             }
-            if (is_array($value2)) {
-                if (isset($_GET['Radio2'])){
-                    usort($value2, "cmp_year");
-                }
-                if (isset($_GET['Radio3'])){
-                    usort($value2, "cmp_name");
-                }
-                foreach ($value2 as $key3 => $value3) {
-                    foreach ($value3 as $key4 => $value4) {
-                        echo "<td>$value4</td>\n";
-                    }
-                    echo "</tr>";
-                }
-                echo "\n";
+            if (isset($_GET['Radio3'])) {
+                usort($value1, "cmp_name");
             }
         }
+        echo "</tr>";
     }
     if (isset($_GET['Submit'])) {
         $seach_result1 = array_flip(search($films, $_GET['Search']));
         $seach_result2 = array_intersect_key($films, $seach_result1);
-        if (isset($_GET['Radio1'])){
+        if (isset($_GET['Radio1'])) {
             usort($seach_result2, "cmp_producer");
         }
         array_walk($seach_result2, "output");
@@ -67,20 +57,8 @@
         $result = array();
         foreach ($films as $key1 => $value1) {
             foreach ($value1 as $key2 => $value2) {
-                // if (!is_array($value2)) {
-                //     print "Введите название книги!";
-                //     // if (stristr($value2, $data)) {
-                //     //     $result[] = $key1;
-                //     // }
-                // }
-                if (is_array($value2)) {
-                    foreach ($value2 as $key3 => $value3) {
-                        foreach ($value3 as $key4 => $value4) {
-                            if (strstr($value3['name'], $data)) {
-                                $result[] = $key1;
-                            }
-                        }
-                    }
+                if (strstr($value1['name'], $data)) {
+                    $result[] = $key1;
                 }
             }
         }
