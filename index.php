@@ -30,34 +30,21 @@
     }
     function output($value1, $key1)
     {
-        foreach ($value1 as $key2 => $value2) {
-            echo "<tr>";
-            if (!is_array($value2)) {
-                echo "<td rowspan='4'>$value2</td>\n";
-            }
-            if (is_array($value2)) {
-                if (isset($_GET['Radio2'])){
-                    usort($value2, "cmp_year");
-                }
-                if (isset($_GET['Radio3'])){
-                    usort($value2, "cmp_name");
-                }
-                foreach ($value2 as $key3 => $value3) {
-                    foreach ($value3 as $key4 => $value4) {
-                        echo "<td>$value4</td>\n";
-                    }
-                    echo "</tr>";
-                }
-                echo "\n";
-            }
+        echo "<tr>";
+        foreach ($value1 as $key1 => $value2) {
+            echo "<td>$value2</td>";
         }
+        echo "</tr>";
     }
     if (isset($_GET['Submit'])) {
         $seach_result1 = array_flip(search($films, $_GET['Search']));
         $seach_result2 = array_intersect_key($films, $seach_result1);
-        if (isset($_GET['Radio1'])){
+        if ($_GET['sort'] === "producer")
             usort($seach_result2, "cmp_producer");
-        }
+        if ($_GET['sort'] === "year")
+            usort($seach_result2, "cmp_year");
+        if ($_GET['sort'] === "name")
+            usort($seach_result2, "cmp_name");
         array_walk($seach_result2, "output");
     }
     echo "</table>\n";
@@ -67,20 +54,8 @@
         $result = array();
         foreach ($films as $key1 => $value1) {
             foreach ($value1 as $key2 => $value2) {
-                // if (!is_array($value2)) {
-                //     print "Введите название книги!";
-                //     // if (stristr($value2, $data)) {
-                //     //     $result[] = $key1;
-                //     // }
-                // }
-                if (is_array($value2)) {
-                    foreach ($value2 as $key3 => $value3) {
-                        foreach ($value3 as $key4 => $value4) {
-                            if (strstr($value3['name'], $data)) {
-                                $result[] = $key1;
-                            }
-                        }
-                    }
+                if (strstr($value1['name'], $data)) {
+                    $result[] = $key1;
                 }
             }
         }
@@ -90,19 +65,20 @@
         return array_unique($result);
     }
     if (isset($_GET['Clear'])) {
-        // unset($$_GET);
-        ob_end_clean();
         header("Location:" . $_SERVER['PHP_SELF']);
+        ob_end_clean();
         exit;
     }
     ?>
-    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="GET">
-        <input type="text" name="Search" size="20"><br>
-        <input type="submit" name="Submit" size="50"><br>
-        <input type="submit" name="Clear" size="50" value="Заново"><br>
-        <input type="radio" id="radio1" name="Radio1"><label for="radio1">Сортировка по ФИ автора</label><br>
-        <input type="radio" id="radio2" name="Radio1"><label for="radio2">Сортировка по году выпуска</label><br>
-        <input type="radio" id="radio3" name="Radio1"><label for="radio3">Сортировка по названию фильма</label><br>
+    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="GET" style="display:block;margin:20px;text-align:center;">
+        <input type="text" name="Search" size="20" placeholder="Название фильма" style="margin:5px;color:green;background-color:lightgreen;font-size:40px;"><br>
+        <input type="submit" name="Submit" size="50" style="margin:5px;font-size:40px;background-color:lightgreen;cursor:pointer;"><br>
+        <input type="submit" name="Clear" size="50" value="Заново" style="margin:5px;font-size:40px;background-color:lightgreen;cursor:pointer;"><br>
+    </form>
+    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="GET" style="">
+        <div style="margin-left:40%"><input type="radio" id="radio1" name="sort" value="producer" checked><label>Сортировка по ФИ автора</label ><br>
+        <input type="radio" id="radio2" name="sort" value="year"><label for="radio2">Сортировка по году выпуска</label><br>
+        <input type="radio" id="radio3" name="sort" value="name"><label for="radio3">Сортировка по названию фильма</label></div><br>
     </form>
 </body>
 

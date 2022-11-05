@@ -1,3 +1,7 @@
+html, body {
+    margin: 0;
+}
+
 table, tr, td, th {
     border: solid black;
     border-collapse: collapse;
