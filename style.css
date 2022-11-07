@@ -13,3 +13,27 @@ table, tr, td, th {
 table {
     margin: auto;
 }
+
+input[type="text"] {
+    margin: 5px;
+    color: green;
+    background-color: lightgreen;
+    font-size: 40px;
+  }
+
+form {
+    display:block;
+    margin:20px;
+    text-align:center;
+}
+
+input[type="submit"] {
+    margin:5px;
+    font-size:40px;
+    background-color:lightgreen;
+    cursor:pointer;
+}
+
+#radioDiv {
+    margin-left:40%
+}
