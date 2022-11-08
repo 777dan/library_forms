@@ -61,7 +61,7 @@
             print "По вашему запросу ничего не найдено(";
         }
         // return array_unique($result);
-        return array_intersect_key($films, array_flip(array_unique($result)), $_GET['Search']);
+        return array_intersect_key($films, array_flip(array_unique($result)));
     }
     if (isset($_GET['Clear'])) {
         ob_end_clean();
