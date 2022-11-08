@@ -33,3 +33,9 @@ input[type="submit"] {
     background-color:lightgreen;
     cursor:pointer;
 }
+
+p {
+    color:red;
+    text-align:center;
+    font-size: 30px;
+}

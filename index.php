@@ -36,18 +36,31 @@
         }
         echo "</tr>";
     }
-    if (isset($_GET['Submit2'])) {
-        if ($_GET['sort'] === "producer")
-            usort($films, "cmp_producer");
-        if ($_GET['sort'] === "year")
-            usort($films, "cmp_year");
-        if ($_GET['sort'] === "name")
-            usort($films, "cmp_name");
-        array_walk($films, "output");
+    if (isset($_GET["Submit"])) {
+        $arr = search($films, $_GET["Search"]);
+        if ($_GET['sort'] === "producer") {
+            usort($arr, "cmp_producer");
+        }
+        if ($_GET['sort'] === "year") {
+            usort($arr, "cmp_year");
+        }
+        if ($_GET['sort'] === "name") {
+            usort($arr, "cmp_name");
+        }
+        array_walk($arr, "output");
     }
-    if (isset($_GET['Submit'])) {
-        array_walk($films, "output");
-    }
+
+    // if (isset($_GET['Submit2'])) {
+        // if ($_GET['sort'] === "producer") {
+        //     usort($arr, "cmp_producer");
+        // }
+        // if ($_GET['sort'] === "year") {
+        //     usort($arr, "cmp_year");
+        // }
+        // if ($_GET['sort'] === "name") {
+        //     usort($arr, "cmp_name");
+        // }
+    // }
     echo "</table>\n";
 
     function search($films, $data)
@@ -61,7 +74,7 @@
             }
         }
         if (count($result) == 0) {
-            print "По вашему запросу ничего не найдено(";
+            print "<p>По вашему запросу ничего не найдено(</p>";
         }
         // return array_unique($result);
         return array_intersect_key($films, array_flip(array_unique($result)));
@@ -76,12 +89,12 @@
         <input type="text" name="Search" size="20" placeholder="Название фильма"><br>
         <input type="submit" name="Submit" size="50"><br>
         <input type="submit" name="Clear" size="50" value="Заново"><br>
-    </form>
-    <form id="form2" action="<?= $_SERVER['PHP_SELF'] ?>" method="GET">
+    <!-- </form> -->
+    <!-- <form id="form2" action="<?= $_SERVER['PHP_SELF'] ?>" method="GET"> -->
         <input type="radio" id="radio1" name="sort" value="producer" checked><label>Сортировка по ФИ автора</label><br>
         <input type="radio" id="radio2" name="sort" value="year"><label for="radio2">Сортировка по году выпуска</label><br>
         <input type="radio" id="radio3" name="sort" value="name"><label for="radio3">Сортировка по названию фильма</label><br>
-        <input type="submit" name="Submit2" size="50" value="Сортировка"><br>
+        <!-- <input type="submit" name="Submit2" size="50" value="Сортировка"><br> -->
     </form>
 </body>
 
